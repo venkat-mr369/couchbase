@@ -1,0 +1,143 @@
+-----------------------
+Note: For better visibility of the below commands, you can visit: https://besttechreads.blogspot.com/2022/03/module-1-2-installation-and.html
+-----------------------
+
+
+To check the THP status
+-----------------------
+cat /sys/kernel/mm/transparent_hugepage/enabled
+cat /sys/kernel/mm/transparent_hugepage/defrag
+
+Disable THP
+-----------
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+
+Check Swappiness:
+-----------------
+cat /proc/sys/vm/swappiness
+
+Disable Swappiness:
+-------------------
+echo 0 > /proc/sys/vm/swappiness
+
+Download a small meta package from Couchbase
+--------------------------------------------
+curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-x86_64.rpm
+
+Install the meta package
+---------------------
+sudo rpm -i ./couchbase-release-1.0-x86_64.rpm 
+
+Install Couchbase Server
+---------------------
+sudo yum install couchbase-server
+[OR]
+yum list couchbase-server --showduplicates
+sudo yum install couchbase-server-version-build
+
+Install using RPM:
+-------------------
+wget https://packages.couchbase.com/releases/6.5.1/couchbase-server-enterprise-6.5.1-centos7.x86_64.rpm
+
+Install Couchbase Server
+------------------------
+rpm --install couchbase-server-enterprise-6.5.1-centos7.x86_64.rpm
+
+Verifying Installation
+----------------------
+http://<server-IP-address>:8091/ 	(non-encrypted)
+https://<server-IP-address>:18091/ 	(encrypted)
+
+Status:
+-------
+systemctl status couchbase-server
+
+Starting and Stopping of Couchbase Server
+-------------------------------------------
+sudo systemctl start couchbase-server
+(or)
+sudo service couchbase-server start
+
+
+sudo systemctl stop couchbase-server
+(or)
+sudo service couchbase-server stop
+
+Google Cloud Startup Script:
+----------------------------
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+echo 0 > /proc/sys/vm/swappiness
+curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-x86_64.rpm
+sudo rpm -i ./couchbase-release-1.0-x86_64.rpm
+sudo yum -y install couchbase-server-6.5.2-6634
+systemctl enable couchbase-server
+
+Allowed Ports In Firewall:
+---------------------------------
+	Client-to-node Ports
+	********************
+	Unencrypted: 8091-8096, 9140, 11210, 11211
+	Encrypted: 11207, 18091-18096
+
+8091-8096,9140,18091-18096,11207-11211
+
+
+Demoed cluster configuration:
+-----------------------------
+VM Machine type : g1-small (1 vCPU, 1.7 GB memory)
+Allocating Memory --> 80 % of RAM ( 80 % of 1732) = 1300 (approx)
+
+
+
+AWS Startup Script:
+-------------------
+source: https://aws.amazon.com/premiumsupport/knowledge-center/execute-user-data-ec2/
+
+Content-Type: multipart/mixed; boundary="//"
+MIME-Version: 1.0
+
+--//
+Content-Type: text/cloud-config; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="cloud-config.txt"
+
+#cloud-config
+cloud_final_modules:
+- [scripts-user, always]
+
+--//
+Content-Type: text/x-shellscript; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="userdata.txt"
+
+#!/bin/bash
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+echo 0 > /proc/sys/vm/swappiness
+curl -O https://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-x86_64.rpm
+sudo rpm -i ./couchbase-release-1.0-x86_64.rpm
+sudo yum -y install couchbase-server-6.5.2-6634
+systemctl enable couchbase-server
+--//
+
+systemctl status couchbase-server
+
+Allowed Ports In Security Groups:
+---------------------------------
+	Client-to-node Ports
+	********************
+	Unencrypted: 8091-8096, 9140, 11210, 11211
+	Encrypted: 11207, 18091-18096
+
+8091-8096
+9140
+18091-18096
+11207-11211
+
+Open below in a browser
+http://IPaddress:8091
+http://34.88.48.23:8091/
