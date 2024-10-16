@@ -18,7 +18,7 @@ gcloud compute instances create couchbase-3 --project=rndproject3 --zone=europe-
 
 ## to verify 
 ~~~
-tiru_sept07@cloudshell:~/couchbase (rndproject3)$ ~~~ gcloud compute instances list ~~~
+tiru_sept07@cloudshell:~/couchbase (rndproject3)$ gcloud compute instances list
 NAME         ZONE             MACHINE_TYPE  PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP     STATUS
 couchbase-1  europe-north1-a  e2-medium                  10.166.0.5   34.88.80.194    RUNNING
 couchbase-2  europe-north1-a  e2-medium                  10.166.0.6   35.228.217.180  RUNNING
